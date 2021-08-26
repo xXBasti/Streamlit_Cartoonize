@@ -1,10 +1,9 @@
 import os
-
-from sklearn.cluster import KMeans
 import cv2
-from matplotlib import pyplot as plt
 import numpy as np
 import matplotlib.image as mpimg
+
+
 
 def to_cartoon( inital, down=2,bi=25, color_space =16, eliptic_kernal=3,quadrativ_kernal=2,neighbourhood=9):
     """
@@ -50,6 +49,18 @@ def to_cartoon( inital, down=2,bi=25, color_space =16, eliptic_kernal=3,quadrati
 
     return cartoon2
 
+
+def apply_style_gan(image,model):
+    return image
+
+
+def build_to_cartoon_function(transformations):
+    TRANSFORMATIONS_MAP = {"Classic": to_cartoon, "Transformer": apply_style_gan, "Style Gan": apply_style_gan}
+    def transform(image):
+        for transformation in transformations:
+            image=TRANSFORMATIONS_MAP[transformation](image)
+        return image
+    return transform
 
 if __name__ == "__main__":
     subpath = os.path.dirname(os.path.abspath(__file__))
