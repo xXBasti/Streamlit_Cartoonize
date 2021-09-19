@@ -1,6 +1,6 @@
 import streamlit as stl
 # from input import image_input, webcam_input
-from cartoonize_functions import to_cartoon
+from cartoonize_functions import to_cartoon, build_style_gan, build_to_cartoon_function, build_to_cartoon
 from data_io import get_input_image, get_image_download_link, generate_download_file, get_image_download_link_button
 from settings import INPUT_METHODS
 
@@ -10,6 +10,8 @@ stl.title("Neural Style Transfer")
 # Sidebar
 stl.sidebar.title('Cartoonize Options')
 transformations = stl.sidebar.multiselect("Select the transfomation method: ", ["Classic", "Transformer", "Style Gan"],["Classic"])
+# resize_option = stl.sidebar.radio("Select Resize Option: ", ("None", "Shrink", "Shrink and Grow"))
+# stl.sidebar.write("For Large Images ")
 stl.sidebar.header('Classic Cartoonize')
 
 
@@ -20,9 +22,15 @@ eliptic_kernal = stl.sidebar.select_slider('eliptic_kernal', list(range(1, 50, 1
 quadrativ_kernal = stl.sidebar.select_slider('quadrativ_kernal', list(range(1, 50, 1)), value=2)
 neighbourhood = stl.sidebar.select_slider('pixel_neighbourhood', list(range(3, 25, 2)), value=9)
 
-stl.sidebar.header('Style Gan Cartoonize')
-# style_model_name = stl.sidebar.selectbox("Choose the style model: ", style_models_name)
+style_models_file = ['candy.onnx', 'composition_vii.onnx', 'feathers.onnx', 'la_muse.onnx', 'mosaic.onnx',
+                     'starry_night.onnx',
+                     'the_scream.onnx', 'the_wave.onnx', 'udnie.onnx', "rainbow.onnx", "nude.onnx", "shipwreck.onnx"]
 
+style_models_name = ['Candy', 'Composition_vii', 'Feathers', 'La_muse', 'Mosaic', 'Starry_night', 'The_scream',
+                     'The_wave', 'Udnie', "Rainbow", "Seal Nude", "Shipwreck"]
+
+stl.sidebar.header('Style Gan Cartoonize')
+model_name = stl.sidebar.selectbox("Choose the style model: ", style_models_name)
 # MainFrame
 
 method = stl.radio('Input option', options=INPUT_METHODS, index=1)
@@ -33,10 +41,11 @@ uploaded_image = stl.file_uploader('Upload your image here', type=['jpg', 'jpeg'
 # uni = cv2.resize(uni, (51,32), interpolation = cv2.INTER_AREA)
 
 image = get_input_image(method, uploaded_image)
-
+TRANSFORMATIONS_MAP = {"Classic": build_to_cartoon(bilateral_filter_steps, color_space, eliptic_kernal, quadrativ_kernal, neighbourhood), "Transformer": build_style_gan(model_name), "Style Gan": build_style_gan(model_name)}
+func = build_to_cartoon_function(transformations,TRANSFORMATIONS_MAP)
 down_scaling_factor = 1
-generated = to_cartoon(image, down_scaling_factor, bilateral_filter_steps, color_space, eliptic_kernal, quadrativ_kernal, neighbourhood)
-
+# generated = to_cartoon(image, down_scaling_factor, bilateral_filter_steps, color_space, eliptic_kernal, quadrativ_kernal, neighbourhood)
+generated = func(image)
 col1, col2 = stl.columns(2)
 with col1:
     stl.image(image, channels='RGB')
