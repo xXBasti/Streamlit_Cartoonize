@@ -110,7 +110,7 @@ def build_style_gan(model_name):
         (h, w) = image.shape[:2]
         oversize_factor = limit_image_size(h, w)
         if oversize_factor > 1:
-            image = cv2.resize(np.array(image),(w/oversize_factor, h/oversize_factor))
+            image = cv2.resize(np.array(image), (w/oversize_factor, h/oversize_factor))
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
         blob = cv2.dnn.blobFromImage(image, 1.0, (w, h), (0, 0, 0), swapRB=False, crop=False)
         model.setInput(blob)
@@ -137,7 +137,7 @@ def build_to_cartoon_function(transformations,TRANSFORMATIONS_MAP):
 
 def limit_image_size(h, w):
     FULL_HD = (1620, 1080)
-    return max(FULL_HD[1]/h, FULL_HD[0]/w)
+    return max(h/FULL_HD[1], w/FULL_HD[0])
 
 
 if __name__ == "__main__":
