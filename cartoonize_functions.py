@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import matplotlib.image as mpimg
 
-from app import style_models_name, style_models_file
+from settings import style_models_file, style_models_name
 
 
 def to_cartoon( inital, down=2,bi=25, color_space =16, eliptic_kernal=3,quadrativ_kernal=2,neighbourhood=9):
@@ -136,7 +136,7 @@ def build_to_cartoon_function(transformations,TRANSFORMATIONS_MAP):
 
 
 def limit_image_size(h, w):
-    FULL_HD = (1920, 1080)
+    FULL_HD = (1620, 1080)
     return max(FULL_HD[1]/h, FULL_HD[0]/w)
 
 

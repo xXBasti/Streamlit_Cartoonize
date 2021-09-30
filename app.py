@@ -1,8 +1,7 @@
 import streamlit as stl
-# from input import image_input, webcam_input
-from cartoonize_functions import to_cartoon, build_style_gan, build_to_cartoon_function, build_to_cartoon
-from data_io import get_input_image, get_image_download_link, generate_download_file, get_image_download_link_button
-from settings import INPUT_METHODS
+from cartoonize_functions import build_style_gan, build_to_cartoon_function, build_to_cartoon
+from data_io import get_input_image, get_image_download_link_button
+from settings import INPUT_METHODS, style_models_name
 
 stl.set_page_config(layout="wide")
 stl.title("Neural Style Transfer")
@@ -21,13 +20,6 @@ bilateral_filter_steps = stl.sidebar.select_slider('bilateral_filter_steps', lis
 eliptic_kernal = stl.sidebar.select_slider('eliptic_kernal', list(range(1, 50, 1)), value=3)
 quadrativ_kernal = stl.sidebar.select_slider('quadrativ_kernal', list(range(1, 50, 1)), value=2)
 neighbourhood = stl.sidebar.select_slider('pixel_neighbourhood', list(range(3, 25, 2)), value=9)
-
-style_models_file = ['candy.onnx', 'composition_vii.onnx', 'feathers.onnx', 'la_muse.onnx', 'mosaic.onnx',
-                     'starry_night.onnx',
-                     'the_scream.onnx', 'the_wave.onnx', 'udnie.onnx', "rainbow.onnx", "nude.onnx", "shipwreck.onnx"]
-
-style_models_name = ['Candy', 'Composition_vii', 'Feathers', 'La_muse', 'Mosaic', 'Starry_night', 'The_scream',
-                     'The_wave', 'Udnie', "Rainbow", "Seal Nude", "Shipwreck"]
 
 stl.sidebar.header('Style Gan Cartoonize')
 model_name = stl.sidebar.selectbox("Choose the style model: ", style_models_name)
