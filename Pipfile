@@ -7,13 +7,11 @@ verify_ssl = true
 allow_prereleases = true
 
 [packages]
-streamlit = ">=0.84.0"
 opencv-python-headless = ">=4.5"
 streamlit = "0.80.0"
 numpy = "1.21.2"
 Pillow = "8.3.1"
 matplotlib = "3.4.3"
-# opencv-python = "*"
 
 [dev-packages]
 black = "*"  # Pretty formatting of Python code
