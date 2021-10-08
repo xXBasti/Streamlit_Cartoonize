@@ -110,7 +110,7 @@ def build_style_gan(model_name):
         (h, w) = image.shape[:2]
         oversize_factor = limit_image_size(h, w)
         if oversize_factor > 1:
-            image = cv2.resize(np.array(image), (w/oversize_factor, h/oversize_factor))
+            image = cv2.resize(np.array(image), (int(w/oversize_factor), int(h/oversize_factor)))
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
         blob = cv2.dnn.blobFromImage(image, 1.0, (w, h), (0, 0, 0), swapRB=False, crop=False)
         model.setInput(blob)

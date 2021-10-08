@@ -4,7 +4,7 @@ from data_io import get_input_image, get_image_download_link_button
 from settings import INPUT_METHODS, style_models_name
 
 stl.set_page_config(layout="wide")
-stl.title("Neural Style Transfer")
+stl.title("Cartoonize Style Transfer")
 
 # Sidebar
 stl.sidebar.title('Cartoonize Options')
