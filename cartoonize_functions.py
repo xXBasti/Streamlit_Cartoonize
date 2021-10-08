@@ -122,7 +122,7 @@ def build_style_gan(model_name):
         output = np.clip(output, 0.0, 255.0)
         output = np.array(output, dtype=np.uint8)
         if oversize_factor > 1:
-            output = cv2.resize(np.array(image), (w , h ))
+            output = cv2.resize(np.array(output), (w , h ))
         return output
     return style_transfer
 
@@ -136,7 +136,7 @@ def build_to_cartoon_function(transformations,TRANSFORMATIONS_MAP):
 
 
 def limit_image_size(h, w):
-    FULL_HD = (1620, 1080)
+    FULL_HD = (1280, 1080)
     return max(h/FULL_HD[1], w/FULL_HD[0])
 
 

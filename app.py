@@ -28,10 +28,6 @@ model_name = stl.sidebar.selectbox("Choose the style model: ", style_models_name
 method = stl.radio('Input option', options=INPUT_METHODS, index=1)
 uploaded_image = stl.file_uploader('Upload your image here', type=['jpg', 'jpeg', 'png'])
 
-
-# uni=mpimg.imread(f"{subpath}/images/20180408_175842.jpg")
-# uni = cv2.resize(uni, (51,32), interpolation = cv2.INTER_AREA)
-
 image = get_input_image(method, uploaded_image)
 TRANSFORMATIONS_MAP = {"Classic": build_to_cartoon(bilateral_filter_steps, color_space, eliptic_kernal, quadrativ_kernal, neighbourhood), "Transformer": build_style_gan(model_name), "Style Gan": build_style_gan(model_name)}
 func = build_to_cartoon_function(transformations,TRANSFORMATIONS_MAP)
