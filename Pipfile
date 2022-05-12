@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[pipenv]
+allow_prereleases = true
+
+[packages]
+opencv-python-headless = ">=4.5"
+streamlit = "0.80.0"
+numpy = "1.21.2"
+Pillow = "8.3.1"
+matplotlib = "3.4.3"
+
+[dev-packages]
+black = "*"  # Pretty formatting of Python code
+pynvim = "*" # Allows nvim users to use black formatting
